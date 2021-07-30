@@ -5,67 +5,226 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+    <link rel="stylesheet" type="text/css"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" type="text/css"  href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css"  href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
   <title>H20 Trust</title>
   </head>
-  <body>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <body class="grey lighten-3">
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
+
+  <!-- navbar start -->
+  <nav class="z-depth-0 grey lighten-4">
+    <div class="nav-wrapper container">
+      <a href="#" class="brand-logo grey-text">
+        <i class="float-sm-right fa fa-tint"></i><b>H20 Trust</b>
+      </a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li class="logged-in" style="display: none;">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-account">Account</a>
+          </li>
+          <li class="logged-in" style="display: none;">
+            <a href="#" class="grey-text" id="logout">Logout</a>
+          </li>
+          <li class="admin" style="display: none;">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-create">Create Guide</a>
+          </li>
+          <li class="logged-out" style="display: none;">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-login">Login</a>
+          </li>
+          <li class="logged-out" style="display: none;">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Sign up</a>
+          </li>
+        </span>
+      </ul>
+    </div>
+  </nav>
+  <!-- navbar end -->
+
+  <!-- modal admin action start -->
+  <form class="center-align admin-actions admin" style="margin: 40px auto; max-width: 300px; display: none;">
+    <input type="email" placeholder="User email" id="admin-email" required />
+    <button class="btn-small yellow darken-2 z-depth-0">Make admin</button>
+  </form>
+  <!-- modal admin action end -->
+
+  <!-- modal signup start -->
+  <div id="modal-signup" class="modal">
+    <div class="modal-content">
+      <h4>Sign up</h4><br />
+      <form id="signup-form">
+        <div class="input-field">
+          <input type="email" id="signup-email" required />
+          <label for="signup-email">Email address</label>
+        </div>
+        <div class="input-field">
+          <input type="password" id="signup-password" required />
+          <label for="signup-password">Choose password</label>
+        </div>
+        <button class="btn darken-2 z-depth-0">Sign up</button>
+      </form>
+    </div>
+  </div>
+  <!-- modal signup start -->
+
+  <!-- modal login start -->
+  <div id="modal-login" class="modal">
+    <div class="modal-content">
+      <h4>Login</h4><br/>
+      <form id="login-form">
+        <div class="input-field">
+          <input type="email" id="login-email" required />
+          <label for="login-email">Email address</label>
+        </div>
+        <div class="input-field">
+          <input type="password" id="login-password" required />
+          <label for="login-password">Your password</label>
+        </div>
+        <button class="btn darken-2 z-depth-0">Login</button>
+        <p class="error pink-text center-align"></p>
+      </form>
+    </div>
+  </div>
+  <!-- modal login end -->
+
+  <!-- modal account-details start -->
+  <div id="modal-account" class="modal">
+    <div class="modal-content center-align">
+      <h4>Account details</h4><br />
+      <div class="account-details">
+        <!-- <p id="accountAddress" class="text-center"></p> -->
+      </div>
+    </div>
+  </div>
+  <!-- modal account-details end -->
+
+  <!-- modal create company start -->
+  <div id="modal-create" class="modal">
+    <div class="modal-content">
+      <h4>Create Company</h4><br />
+      <form id="create-form">
+        <div class="input-field">
+          <input type="text" id="title" required>
+          <label for="title">Company Title</label>
+        </div>
+        <div class="input-field">
+          <textarea id="content1" class="materialize-textarea" required></textarea>
+          <label for="content1">Company Content</label>
+        </div>
+        <button class="btn darken-2 z-depth-0">Create</button>
+      </form>
+    </div>
+  </div>
+  <!-- modal create company end -->
+
+  <!-- display   -->
+  <div class="container" style="margin-top: 40px;">
+    <ul class="collapsible z-depth-0 guides" style="border: none;">
+      
+    </ul>
+  </div>
+
   <div class="card text-center">
-  <div class="card-header">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-         <div class="card-header">
-     <h1 class="float-sm-right fa fa-tint"> <b>H20 Trust</b></h1>
-     </div>
-          <hr/>
-          <br/>
-          <div id="loader">
-           <I><p class="text-center">Setting Up...</p></I>
-          </div>
-          <div id="content" style="display: none;">
-            <table class="table table-striped table-dark">
-             <thead>
-                <tr>
-                  <th scope="col">Identity</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Transactions</th>
-                </tr>
-              </thead>
-              <tbody id="candidatesResults">
-              </tbody>
-            </table>
-            <hr/>
-            <div class="form-row">
-            <form onSubmit="App.castVote(); return false;">
-            <div class="container">
-              <div class="row">
-              <div  class="form-group col-md-6">  
-                <b><label for="candidatesSelect">Transaction Initializor Selection:</label></b>
-                </div>
-                 <div  class="form-group col-md-4">
-                <select class="form-control btn btn-info dropdown-toggle" id="candidatesSelect" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></select>
-                </div>
-                 <div  class="form-group col-md-2">
-              <button type="submit" class="btn btn-outline-primary">Transact</button>
-              </div>
-              </div>
-              </div>
-            </form>
-            </br>
-            <p id="accountAddress" class="text-center"></p>
+    <div class="card-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- <div class="card-header">
+
+            </div> -->
+            <br/>
+            <div id="loader">
+              <I><p class="text-center">Setting Up...</p></I>
+            </div>
+            <div id="content" style="display: none;">
+              <table class="table table-striped responsive-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Identity</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Transactions</th>
+                  </tr>
+                </thead>
+                <tbody id="candidatesResults"></tbody>
+              </table>
+              <!-- transaction initializer selection start -->
+              <div class="form-row">
+                <form onSubmit="App.castVote(); return false;">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col s6">
+                        <b><label for="candidatesSelect">Transaction Initializer Selection:</label></b>
+                      </div>
+                      <div  class="col s4">
+                        <select class="waves-effect waves-light btn dropdown-toggle" id="candidatesSelect" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></select>
+                      </div>
+                      <div  class="col s2">
+                        <button type="submit" class="waves-effect waves-light btn">Transact</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </br>
+              <p id="accountAddress" class="text-center"></p>
+            </div>
+            <!-- transaction initializer selection end -->
           </div>
         </div>
       </div>
     </div>
     </div>
     </div>
-    </div>
+  </div>
+  
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-functions.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use  https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyDn_tyA-IbXb-L9RtasAAkgrdE9g61UuiE",
+    authDomain: "h20-trust.firebaseapp.com",
+    projectId: "h20-trust",
+    storageBucket: "h20-trust.appspot.com",
+    messagingSenderId: "476563322687",
+    appId: "1:476563322687:web:4bcd6ad92f1b06a9c8458a",
+    measurementId: "G-5FW68ZXT96"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  // firebase.analytics();
+
+  // make auth and firestore references
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  // update firestore settings
+  db.settings({ timestampsInSnapshots: true });
+
+  
+</script>
+
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/index.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+    <!-- <script src="js/bootstrap.min.js"></script> -->
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
     <script src="js/app.js"></script>
